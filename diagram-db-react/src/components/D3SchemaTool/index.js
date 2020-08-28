@@ -122,11 +122,16 @@ export default () => {
                         ctx.font = `${fontSize}px Sans-Serif`;
                         // console.log(node)
                         const textWidth = 180 // ctx.measureText(label).width;
-                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 2); // some padding, altezza carattere + padding(2) * 150
                         // diventerà altezza carattere * n attributi
 
-                        ctx.fillStyle = 'rgba(217, 238, 255, 0.2)';
-                        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+                        ctx.fillStyle = 'rgba(217, 238, 255, 0.4)';
+                        // console.log(Array(node.fields).length)
+                        var size = Object.keys(node.fields).length;
+                        const bckgDimensions = [textWidth, size*fontSize+20].map(n => n + fontSize * 2); // some padding, altezza carattere + padding(2) * 150
+                        // const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 2); // some padding, altezza carattere + padding(2) * 150
+
+
+                        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2 + 80, ...bckgDimensions);
 
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
@@ -136,12 +141,24 @@ export default () => {
                         let fields = node.fields
                         fields.forEach((el, i) => {
                             
-                            ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2 + fontSize*i, ...bckgDimensions);
+                            // ctx.fillRect(node.x - bckgDimensions[0] / 2 + 100, node.y - bckgDimensions[1] / 2 + fontSize * i + 40, ...bckgDimensions);
 
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'middle';
-                            ctx.fillStyle =  node.color;
-                            ctx.fillText(el.attrLongName, node.x+i*fontSize, node.y);
+
+                            let attrWidthPosition = node.x - bckgDimensions[0] / 2 + 100
+                            let attrHeightPosition = node.y - bckgDimensions[1] / 2 + fontSize * i + 110
+
+                            // ctx.fillStyle =  node.color;
+                            if (el.isAttrPrimary && el.isForeignKey) {
+                                ctx.fillText("🔒 & 🔑" + el.attrLongName, attrWidthPosition, attrHeightPosition)
+                            } else if (el.isAttrPrimary && !el.isForeignKey) {
+                                ctx.fillText("🔒" + el.attrLongName, attrWidthPosition, attrHeightPosition)
+                            } else if (!el.isAttrPrimary && el.isForeignKey) {
+                                ctx.fillText("🔑" + el.attrLongName, attrWidthPosition, attrHeightPosition)
+                            } else {
+                                ctx.fillText(el.attrLongName, attrWidthPosition, attrHeightPosition)
+                            }
                             // console.log(el.attrLongName)
 
                         })

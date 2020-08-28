@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <D3DbSchemaTool />
-      <DbSchema />
+      {/* <DbSchema /> */}
       {/* <DiagramFromD3Json /> */}
     </div>
   );

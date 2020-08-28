@@ -82,6 +82,7 @@ const result = Object.values(foreignTables.reduce((c, v) => {
     table: o[0],
 }));
 // console.log("result ->", result);
+console.log("finalArray ", finalArray)
 
 
 //  creo LINKS in mygraph
@@ -120,7 +121,7 @@ fileObjs.forEach((file, index) => {
 
 // creo sia i nodes per react-diagram che i nodes per d3
 fileObjs.forEach((file, index) => {
-    console.log("index", index)
+    // console.log("index", index)
     let correctPath = `${dirServer}/models/${file}`
 
     // console.log("file -> ", file)
@@ -147,9 +148,9 @@ fileObjs.forEach((file, index) => {
             const attrLongName = attr.field.name
             const attrDbName = attr.field.db_name || "no-dbname"
             const isAttrPrimary = attr.field.primary ? true : false
-            
+            // const attmeid = attrLongName.splice(0,-2)
             const isForeignKey = finalArray.includes(attrLongName) ? true : false
-
+            // console.log(isForeignKey)
             node.items.push({
                 attrDbName,
                 attrLongName,
@@ -166,7 +167,7 @@ fileObjs.forEach((file, index) => {
 
 })
 
-fs.writeFileSync(`${dirServer}/db-schema-tool/db-schema.json`, JSON.stringify(allData), (err) => {
+fs.writeFileSync(`${dirServer}/diagram-db-react/src/db-schema.json`, JSON.stringify(allData), (err) => {
     err ? console.log(err) : console.log("Output saved to /db-schema.json");
 });
 
@@ -176,8 +177,8 @@ dbschema.forEach((el, index) => {
     el.items.forEach(f => {
         acc.push({
             attrLongName: f.attrLongName,
-            isForeignKey: f.isAttrPrimary,
-            isAttrPrimary: f.isForeignKey
+            isForeignKey: f.isForeignKey,
+            isAttrPrimary: f.isAttrPrimary
         })
     })
     mygraph.nodes.push({

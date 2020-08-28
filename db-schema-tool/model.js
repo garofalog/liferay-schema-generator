@@ -19,20 +19,7 @@ const dirServer = process.env.PWD
 
 // const api = new fdir().withFullPaths().crawl("./../models");
 const fileObjs = fs.readdirSync(`${dirServer}/models`);
-// fileObjs.forEach(file => {
-//     console.log(file);
-// });
-// get all files in a directory synchronously
-// const files = api.sync();
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FITLER service.xml FILES
-
-// const PATTERN = /\.json$/;
-
-// const ROW_MODELS = files.filter((str) => {
-//     return PATTERN.test(str);
-// });
+const dbschema = JSON.parse(fs.readFileSync(`${dirServer}/diagram-db-react/src/db-schema.json`))
 
 const allData  = []
 const allIds = []
@@ -41,11 +28,9 @@ const mygraph = {
     nodes: []
 }
 
-// const service_files = JSON.stringify(ROW_MODELS);
-// console.log(service_files);
-let groupNum = 0
 const foreignTables = []
 
+// crea allIds.json (links) - array da confrontare per creare i link in d3
 fileObjs.forEach((file) => {
     let correctPath = `${dirServer}/models/${file}`
     // console.log("temp",temp)
@@ -71,7 +56,6 @@ fileObjs.forEach((file) => {
                     table: tableLongReference
                 })
             }
-
             let tar;
             Object.keys(allIds).forEach(key => {
                 if (allIds[key].key === attrLongName) {
@@ -84,24 +68,11 @@ fileObjs.forEach((file) => {
     })
 })
 // console.log("allids ->", allIds)
-
-// fs.writeFileSync("./allIds.json", JSON.stringify(allIds), (err) => {
-//     err ? console.log(err) : console.log("Output saved to /allIds.json");
-// });
+fs.writeFileSync("./allIds.json", JSON.stringify(allIds), (err) => {
+    err ? console.log(err) : console.log("Output saved to /allIds.json");
+});
 
 const finalArray = allIds.map( obj => obj.key);
-
-// const tablesArray = allIds.map(obj => obj.table);
-// var counts = [];
-// const i = 1
-// foreignTables.forEach((x) => {
-//     counts.push({
-//         count: (x || 0) + 1,
-//         tablename: x
-//     })
-// });
-// console.log(counts)
-
 const result = Object.values(foreignTables.reduce((c, v) => {
     c[v] = c[v] || [v, 0];
     c[v][1]++;
@@ -113,28 +84,22 @@ const result = Object.values(foreignTables.reduce((c, v) => {
 // console.log("result ->", result);
 
 
-// console.log("finalArray", finalArray)
-
+//  creo LINKS in mygraph
 fileObjs.forEach((file, index) => {
         let correctPath = `${dirServer}/models/${file}`
-
         const fileContent = JSON.parse(fs.readFileSync(correctPath))
         const readableContent = JSON.stringify(fileContent)
         const uObject = readableContent.replace(/-/g, "_").replace(/\$/g, "field")
         // console.log("namespace -> ", namespace)
         const entity = JSON.parse(uObject).service_builder.entity
-
         entity.forEach(table => {
             const tableLongReference = table.field.name || false // table ref
             table.column.forEach((attr) => {
                 const attrLongName = attr.field.name
                 const isForeignKey = finalArray.includes(attrLongName) ? true : false
-
                 let tar;
-
                 Object.keys(allIds).forEach(key => {
                     // Object.keys(result).forEach(kk => {
-                    
                         if (allIds[key].key === attrLongName) {
                             tar = allIds[key].table
                             // console.log(result[tar])
@@ -143,23 +108,19 @@ fileObjs.forEach((file, index) => {
                                     mygraph.links.push({
                                         source: tableLongReference,
                                         target: isForeignKey ? tar : "no-tar",
-                                        value: ee.key
-                                    })
+                                        value: ee.key                                    })
                                 }
                             })
-                            
-                            // foreignTables.push(tar)
-                            // console.log(allIds[key].table);
                         }
-                    // })
-
                 });
         })
     })
 })
 
 
+// creo sia i nodes per react-diagram che i nodes per d3
 fileObjs.forEach((file, index) => {
+    console.log("index", index)
     let correctPath = `${dirServer}/models/${file}`
 
     // console.log("file -> ", file)
@@ -188,7 +149,7 @@ fileObjs.forEach((file, index) => {
             const isAttrPrimary = attr.field.primary ? true : false
             
             const isForeignKey = finalArray.includes(attrLongName) ? true : false
-            // console.log(`field name: ${attrType},\ field type: ${attrType},\ field primary: ${isAttrPrimary}`)
+
             node.items.push({
                 attrDbName,
                 attrLongName,
@@ -197,25 +158,36 @@ fileObjs.forEach((file, index) => {
                 isForeignKey,
                 tableReference: tableReference || "none"
             })
-        })
 
-        mygraph.nodes.push({
-            group: groupNum,
-            id: tableLongReference
         })
 
         allData.push(node)
     })
 
-    groupNum++
-
-    fs.writeFileSync(`${dirServer}/db-schema.json`, JSON.stringify(allData), (err) => {
-        err ? console.log(err) : console.log("Output saved to /db-schema.json");
-    });
-
-    fs.writeFileSync(`${dirServer}/my-schema-nodes.json`, JSON.stringify(mygraph), (err) => {
-        err ? console.log(err) : console.log("Output saved to /my-schema-nodes.json")
-    });
-
 })
 
+fs.writeFileSync(`${dirServer}/db-schema-tool/db-schema.json`, JSON.stringify(allData), (err) => {
+    err ? console.log(err) : console.log("Output saved to /db-schema.json");
+});
+
+dbschema.forEach((el, index) => {
+    const tableTitle = el.tableLongReference
+    let acc = []
+    el.items.forEach(f => {
+        acc.push({
+            attrLongName: f.attrLongName,
+            isForeignKey: f.isAttrPrimary,
+            isAttrPrimary: f.isForeignKey
+        })
+    })
+    mygraph.nodes.push({
+        group: index,
+        id: tableTitle,
+        fields: acc
+    })
+})
+
+
+fs.writeFileSync(`${dirServer}/diagram-db-react/src/my-schema-nodes.json`, JSON.stringify(mygraph), (err) => {
+    err ? console.log(err) : console.log("Output saved to /my-schema-nodes.json")
+});

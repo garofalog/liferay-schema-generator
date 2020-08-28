@@ -103,6 +103,14 @@ const main = async () => {
             console.log(`exec error: ${error}`);
         }
     });
+
+    // const d3Model = await exec('node db-schema-tool/d3model.js', (error, stdout, stderr) => {
+    //     console.log(`stdout: ${stdout}`);
+    //     console.log(`stderr: ${stderr}`);
+    //     if (error !== null) {
+    //         console.log(`exec error: ${error}`);
+    //     }
+    // });
 }
 main();
 

@@ -2,28 +2,23 @@
 import React, { useRef, useCallback, useMemo, useState } from "react";
 import { ForceGraph2D } from 'react-force-graph';// import { ForceGraph2D, ForceGraph3D, ForceGraphVR, ForceGraphAR } from 'react-force-graph';
 import mis from "../../data/miserables.json";
-import myschema from "../../data/my-schema-nodes.json"
+import myschema from "./../../my-schema-nodes.json"
 import graph from "../../db-schema.json";
 
 let count = 0;
+const NODE_R = 8;
+
 // const { useRef, useCallback } = React;
 
-
-/**
-* Tests auto distribution
-*/
 class DemoWidget extends React.Component {
     engine;
 
     render() {
         return ( 
-
             <p>ciaociao</p>
         );
     }
 }
-const NODE_R = 8;
-
 
 export default () => {
     const fgRef = useRef();
@@ -50,6 +45,12 @@ export default () => {
         updateHighlight();
     };
 
+    const onNodeDragEnd = node => {
+        node.fx = node.x;
+        node.fy = node.y;
+        node.fz = node.z;
+    }
+
     const handleLinkHover = link => {
         highlightNodes.clear();
         highlightLinks.clear();
@@ -58,67 +59,126 @@ export default () => {
             highlightLinks.add(link);
             highlightNodes.add(link.source);
             highlightNodes.add(link.target);
+            
         }
 
         updateHighlight();
     };
 
-    const paintRing = useCallback((node, ctx) => {
+    const paintRing = useCallback((node, ctx, globalScale) => {
+
         // add ring just for highlighted nodes
         ctx.beginPath();
         ctx.arc(node.x, node.y, NODE_R * 2, 0, 2 * Math.PI, false);
-        ctx.fillStyle = node === hoverNode ? 'red' : 'orange';
+        ctx.fillStyle = node === hoverNode ? 'blue' : 'orange';
         ctx.fill();
+
+        // labels on hover
+        const label = node.id;
+        const fontSize = 12 / globalScale;
+        ctx.font = `${fontSize}px Sans-Serif`;
+        const textWidth = ctx.measureText(label).width;
+        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+        ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = node.color;
+        ctx.fillText(label, node.x, node.y);
+
     }, [hoverNode]);
+
+    
+    
 
 
     //! 1) setup the diagram engine
     var style = {
-        // color: 'white',
-        // fontSize: 200
         height: 500
     };
     
     return (
         <div style={style}>
             <ForceGraph2D
-                nodeRelSize={NODE_R}
-                linkWidth={link => highlightLinks.has(link) ? 5 : 1}
-                linkDirectionalParticles={4}
-                linkDirectionalParticleWidth={link => highlightLinks.has(link) ? 4 : 0}
-                nodeCanvasObjectMode={node => highlightNodes.has(node) ? 'before' : undefined}
-                nodeCanvasObject={paintRing}
-                onNodeHover={handleNodeHover}
-                onLinkHover={handleLinkHover}
+                // nodeRelSize={NODE_R}
+                linkWidth={ link => highlightLinks.has(link) ? 5 : 1 }
+                // linkDirectionalParticles={4}
+                // linkDirectionalParticleWidth={ link => highlightLinks.has(link) ? 4 : 0 }
+                // nodeCanvasObjectMode={ node => highlightNodes.has(node) ? 'before' : undefined }
+                // onNodeHover={handleNodeHover}
+                // onLinkHover={handleLinkHover}
                 // graphData={mis}
                 graphData={myschema}
                 nodeAutoColorBy="group"
-                // nodeCanvasObject={(node, ctx, globalScale) => {
-                //     const label = node.id;
+                linkDirectionalParticles = "value"
+                linkDirectionalParticleSpeed = {
+                    d => d.value * 0.001
+                }
+                nodeCanvasObject = {
+                    (node, ctx, globalScale) => {
 
-                //     const fontSize = 12 / globalScale;
-                //     ctx.font = `${fontSize}px Sans-Serif`;
-                //     const textWidth = ctx.measureText(label).width;
-                //     const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+                        const label = node.id;
+                        const fontSize = 12 / globalScale;
+                        ctx.font = `${fontSize}px Sans-Serif`;
+                        // console.log(node)
+                        const textWidth = 180 // ctx.measureText(label).width;
+                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 2); // some padding, altezza carattere + padding(2) * 150
+                        // diventerà altezza carattere * n attributi
 
-                //     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                //     ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+                        ctx.fillStyle = 'rgba(217, 238, 255, 0.2)';
+                        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
 
-                //     ctx.textAlign = 'center';
-                //     ctx.textBaseline = 'middle';
-                //     ctx.fillStyle = node.color;
-                //     ctx.fillText(label, node.x, node.y);
-                // }}
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillStyle = node.color;
+                        ctx.fillText(label, node.x, node.y);
+
+                        let fields = node.fields
+                        fields.forEach((el, i) => {
+                            
+                            ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2 + fontSize*i, ...bckgDimensions);
+
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillStyle =  node.color;
+                            ctx.fillText(el.attrLongName, node.x+i*fontSize, node.y);
+                            // console.log(el.attrLongName)
+
+                        })
+                    }
+                }
+
+                // nodeCanvasObject={paintRing}
+
+                // nodeCanvasObject = {
+                //     (node, ctx, globalScale) => {
+                //         const label = node.id;
+                //         const fontSize = 12 / globalScale;
+                //         ctx.font = `${fontSize}px Sans-Serif`;
+                //         const textWidth = ctx.measureText(label).width;
+                //         const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+                //         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                //         ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+                //         ctx.textAlign = 'center';
+                //         ctx.textBaseline = 'middle';
+                //         ctx.fillStyle = node.color;
+                //         ctx.fillText(label, node.x, node.y);
+                //     }
+                // }
+
                 nodeLabel="id"
-                nodeAutoColorBy="group"
-                onNodeDragEnd={node => {
-                    node.fx = node.x;
-                    node.fy = node.y;
-                    node.fz = node.z;
-                }}
+                onNodeDragEnd = {
+                    node => {
+                        node.fx = node.x;
+                        node.fy = node.y;
+                        node.fz = node.z;
+                    }
+                }
                 ref={fgRef}
                 cooldownTicks={100}
-                onEngineStop={() => fgRef.current.zoomToFit(400)}
+                // onEngineStop={ () => fgRef.current.zoomToFit(400) }
                 // onNodeClick={handleClick}
                 />
             <DemoWidget />

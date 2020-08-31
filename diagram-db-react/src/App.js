@@ -7,13 +7,18 @@ import "./App.css";
 // import AutoLayoutDagre from "./components/AutoLayoutDagre";
 import DbSchema from "./components/DbSchema";
 import D3DbSchemaTool from "./components/D3SchemaTool"
+import D3DbSchemaTool3D from "./components/D3SchemaTool3D"
 // import DiagramFromD3Json from "./components/DiagramFromD3Json";
 
+var style = {
+  backgroundColor: "#fbfbfb"
+};
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={style}>
       <D3DbSchemaTool />
+      <D3DbSchemaTool3D />
       {/* <DbSchema /> */}
       {/* <DiagramFromD3Json /> */}
     </div>

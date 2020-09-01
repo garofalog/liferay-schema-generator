@@ -7,13 +7,20 @@ export default () => {
     const fgRef = useRef();
     const [highlightNodes, setHighlightNodes] = useState(new Set());
     const [highlightLinks, setHighlightLinks] = useState(new Set());
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     // eslint-disable-next-line no-unused-vars
     const [hoverNode, setHoverNode] = useState(null);
 
     useEffect(() => {
         const fg = fgRef.current;
-        fg.d3Force('charge').strength(-1400);
+        fg.d3Force('charge').strength(-400);
     }, []);
+
+    const updateWidthAndHeight = () => {
+        setWidth(window.innerWidth - 100);
+        setHeight(window.innerHeight - 150);
+    };
 
     const updateHighlight = () => {
         setHighlightNodes(highlightNodes);
@@ -59,10 +66,19 @@ export default () => {
         })
         return Fieldslist
     })
+
+    React.useEffect(() => {
+        ["DOMContentLoaded", "resize", "onload"].forEach(ev => {
+            window.addEventListener(ev, updateWidthAndHeight);
+        })
+        return () => window.removeEventListener("DOMContentLoaded", updateWidthAndHeight);
+    });
     
     return (
         <div>
             <ForceGraph2D
+                width={width}
+                height={height}
                 linkWidth={ link => highlightLinks.has(link) ? 10 : 1 }
                 linkDirectionalParticleWidth={ link => highlightLinks.has(link) ? 4 : 0 }
                 nodeCanvasObjectMode={ node => highlightNodes.has(node) ? 'before' : undefined }

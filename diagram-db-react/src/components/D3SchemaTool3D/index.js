@@ -9,12 +9,19 @@ export default () => {
 
     const [highlightNodes, setHighlightNodes] = useState(new Set());
     const [highlightLinks, setHighlightLinks] = useState(new Set());
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     // eslint-disable-next-line no-unused-vars
     const [hoverNode, setHoverNode] = useState(null);
 
     const updateHighlight = () => {
         setHighlightNodes(highlightNodes);
         setHighlightLinks(highlightLinks);
+    };
+
+    const updateWidthAndHeight = () => {
+        setWidth(window.innerWidth-100);
+        setHeight(window.innerHeight-150);
     };
 
     const handleLinkHover = link => {
@@ -47,6 +54,13 @@ export default () => {
         );
     }, [fgRef]);
 
+    React.useEffect(() => {
+        ["DOMContentLoaded", "resize", "onLoad"].forEach(ev => {
+            window.addEventListener(ev, updateWidthAndHeight);
+        })
+        // return () => window.removeEventListener("DOMContentLoaded", updateWidthAndHeight);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fieldList = useCallback((node, ctx, globalScale) => {
         let Fieldslist = node.id.toUpperCase() + "<br>"
@@ -69,6 +83,9 @@ export default () => {
     return (
         <div>
             <ForceGraph3D
+                className="canvas3d"
+                width={width}
+                height={height}
                 backgroundColor="#000"
                 nodeRelSize={NODE_R}
                 ref={fgRef}
@@ -106,7 +123,7 @@ export default () => {
                     sprite.fillColor = "red"         
                     return sprite;
                 }}
-            />;
+            />
         </div>
     );
 };

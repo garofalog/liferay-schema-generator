@@ -10,7 +10,6 @@ body {
 }
 
 .tab {
-    width: 100%;
     padding: 25px;
     color: #333;
 }
@@ -18,6 +17,8 @@ body {
 ul.inline {
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
 ul.inline li {

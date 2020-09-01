@@ -5,6 +5,7 @@ import D3DbSchemaTool3D from "./components/D3SchemaTool3D"
 
 const Tabs = (props) => {
     const [selected, setSelected] = useState(props.selected || 0);
+    
     const handleChange = (index) => {
         setSelected(index);
     }
@@ -30,17 +31,17 @@ const Tabs = (props) => {
 }
 
 const Panel = (props) => {
-    return <div>{props.children}</div>
+    return <div className="panel">{props.children}</div>
 }
 
 function App() {
     return (
 
-        <Tabs selected={1}>
-            <Panel title="first">
+        <Tabs selected={0}>
+            <Panel title="3D Schema">
                 <D3DbSchemaTool3D />
             </Panel>
-            <Panel title="second">
+            <Panel title="2D Schema">
                 <D3DbSchemaTool />
             </Panel>
         </Tabs>

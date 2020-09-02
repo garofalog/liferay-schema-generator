@@ -1,7 +1,7 @@
 
 import React, { useRef, useCallback, useState, useEffect } from "react";
 import { ForceGraph2D } from 'react-force-graph';
-import myschema from "./../../my-schema-nodes.json"
+import myschema from "./../../data/my-schema-nodes.json"
 
 export default () => {
     const fgRef = useRef();

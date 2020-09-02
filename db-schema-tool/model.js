@@ -18,8 +18,6 @@ import fs from "fs";
 const dirServer = process.env.PWD
 
 const fileObjs = fs.readdirSync(`${dirServer}/models`);
-const dbschema = JSON.parse(fs.readFileSync(`${dirServer}/diagram-db-react/src/db-schema.json`))
-
 const allData  = []
 const allIds = []
 const mygraph = {
@@ -165,9 +163,11 @@ fileObjs.forEach((file, index) => {
 
 })
 
-fs.writeFileSync(`${dirServer}/diagram-db-react/src/db-schema.json`, JSON.stringify(allData), (err) => {
+fs.writeFileSync(`${dirServer}/diagram-db-react/src/data/db-schema.json`, JSON.stringify(allData), (err) => {
     err ? console.log(err) : console.log("Output saved to /db-schema.json");
 });
+
+const dbschema = JSON.parse(fs.readFileSync(`${dirServer}/diagram-db-react/src/data/db-schema.json`))
 
 dbschema.forEach((el, index) => {
     const tableTitle = el.tableLongReference
@@ -187,6 +187,6 @@ dbschema.forEach((el, index) => {
 })
 
 
-fs.writeFileSync(`${dirServer}/diagram-db-react/src/my-schema-nodes.json`, JSON.stringify(mygraph), (err) => {
+fs.writeFileSync(`${dirServer}/diagram-db-react/src/data/my-schema-nodes.json`, JSON.stringify(mygraph), (err) => {
     err ? console.log(err) : console.log("Output saved to /my-schema-nodes.json")
 });

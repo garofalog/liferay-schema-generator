@@ -84,18 +84,24 @@ const main = async () => {
 
     })
     const callIndex = await exec('node db-schema-tool/index.js', (error, stdout, stderr) => {
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
+        if (stdout) {
+            console.log(`stdout: ${stdout}`)
+        } else if (stderr) {
+            console.log(`stderr: ${stderr}`);
+        }
         if (error !== null) {
-            console.log(`exec error: ${error}`);
+            console.log(`callIndex exec error: ${error}`);
         }
     });
 
     const createModel = await exec('node db-schema-tool/model.js', (error, stdout, stderr) => {
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
+        if (stdout) {
+            console.log(`stdout: ${stdout}`)
+        } else if (stderr) {
+            console.log(`stderr: ${stderr}`);
+        }
         if (error !== null) {
-            console.log(`exec error: ${error}`);
+            console.log(`createModel exec error: ${error}`);
         }
     });
 

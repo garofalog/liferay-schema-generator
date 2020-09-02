@@ -17,7 +17,6 @@
 import fs from "fs";
 const dirServer = process.env.PWD
 
-// const api = new fdir().withFullPaths().crawl("./../models");
 const fileObjs = fs.readdirSync(`${dirServer}/models`);
 const dbschema = JSON.parse(fs.readFileSync(`${dirServer}/diagram-db-react/src/db-schema.json`))
 
@@ -30,7 +29,6 @@ const mygraph = {
 
 const foreignTables = []
 
-// crea allIds.json (links) - array da confrontare per creare i link in d3
 fileObjs.forEach((file) => {
     let correctPath = `${dirServer}/models/${file}`
     // console.log("temp",temp)

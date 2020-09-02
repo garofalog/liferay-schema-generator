@@ -6,7 +6,6 @@ import {
     exec
 } from 'child_process';
 
-// const jsonfile = require('./db-schema-tool/index.js');
 const diagramPath = []
 
 console.log(
@@ -34,10 +33,6 @@ console.log(
 //         })
 //     )
 // );
-
-
-
-
 
 const questionaire = async () => {
 
@@ -104,13 +99,6 @@ const main = async () => {
         }
     });
 
-    // const d3Model = await exec('node db-schema-tool/d3model.js', (error, stdout, stderr) => {
-    //     console.log(`stdout: ${stdout}`);
-    //     console.log(`stderr: ${stderr}`);
-    //     if (error !== null) {
-    //         console.log(`exec error: ${error}`);
-    //     }
-    // });
 }
 main();
 

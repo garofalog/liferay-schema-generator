@@ -58,7 +58,6 @@ export default () => {
         ["DOMContentLoaded", "resize", "onLoad"].forEach(ev => {
             window.addEventListener(ev, updateWidthAndHeight);
         })
-        // return () => window.removeEventListener("DOMContentLoaded", updateWidthAndHeight);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

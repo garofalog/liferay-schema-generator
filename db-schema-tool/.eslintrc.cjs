@@ -12,6 +12,7 @@
  * details.
  */
 
+// eslint-disable-next-line no-undef
 module.exports = {
     env: {
         browser: true,
@@ -20,12 +21,14 @@ module.exports = {
     extends: "eslint:recommended",
     parserOptions: {
         ecmaVersion: 11,
-        sourceType: "module"
+        sourceType: "module",
+        type: "module"
     },
     rules: {
         "no-console":"off",
         "no-unused-expressions": ["error", {
             "allowTernary": true
-        }]
+        }],
+        semi: ["error", "never"]
     }
-};
+}

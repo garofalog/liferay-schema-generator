@@ -25,19 +25,10 @@ console.log(
         })
     )
 );
-// console.log(
-//     chalk.white(
-//         figlet.textSync("schema generator", {
-//             horizontalLayout: "full",
-//             font: "Mini"
-//         })
-//     )
-// );
 
 const questionaire = async () => {
-
     let folder = ''
-    const first = await inquirer.prompt({
+    await inquirer.prompt({
         type: 'input',
         name: 'liferay_folder_path',
         message: "Insert Liferay Portal's folder absolute path",
@@ -45,7 +36,6 @@ const questionaire = async () => {
         console.log(answers)
         folder = answers.liferay_folder_path.match(/\/$/g) === null ? answers.liferay_folder_path : answers.liferay_folder_path.slice(0, -1)
     });
-
     const sec = await inquirer.prompt({
         type: 'expand',
         name: 'choices',
@@ -72,18 +62,14 @@ const questionaire = async () => {
     })
 }
 
-
-
-
 const main = async () => {
-    const que = await questionaire().then(answ => {
-        // console.log("dia",diagramPath)
+    await questionaire().then(answ => {
         fs.writeFile("./project-path.json", JSON.stringify(diagramPath), (err) => {
             err ? console.log(err) : console.log("Output saved to /project-path.json")
         })
 
     })
-    const callIndex = await exec('node db-schema-tool/index.js', (error, stdout, stderr) => {
+    await exec('node db-schema-tool/index.js', (error, stdout, stderr) => {
         if (stdout) {
             console.log(`stdout: ${stdout}`)
         } else if (stderr) {
@@ -93,8 +79,7 @@ const main = async () => {
             console.log(`callIndex exec error: ${error}`);
         }
     });
-
-    const createModel = await exec('node db-schema-tool/model.js', (error, stdout, stderr) => {
+    await exec('node db-schema-tool/model.js', (error, stdout, stderr) => {
         if (stdout) {
             console.log(`stdout: ${stdout}`)
         } else if (stderr) {
@@ -104,43 +89,5 @@ const main = async () => {
             console.log(`createModel exec error: ${error}`);
         }
     });
-
 }
 main();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// inquirer.prompt(questions).then((answers) => {
-//     console.log('\nOrder receipt:');
-//     console.log(JSON.stringify(answers, null, '  '));
-// });
-
-
-
-
-
-// inquirer.prompt(
-//     [{
-//         type: 'rawlist',
-//         name: 'reptile',
-//         message: 'Which is better?',
-//         choices: ['alligator', 'crocodile'],
-//     }]
-// ).then(answers => {
-//     console.info('Answer:', answers.reptile);
-// });
-
-
-
-

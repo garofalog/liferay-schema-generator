@@ -50,7 +50,7 @@ export default () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fieldList = useCallback((node, ctx, globalScale) => {
-        let Fieldslist = ''
+        let Fieldslist = node.id.toUpperCase() + "<br>"
         node.fields.forEach((el, i) => {
             let fieldEl
             if (el.isAttrPrimary && el.isForeignKey) {

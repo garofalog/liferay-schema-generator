@@ -15,6 +15,7 @@
         "cli": "node cli.js",
         "diagram": "cd diagram-db-react && yarn start",
         "build": "cd diagram-db-react && yarn build",
+        "lint": "cd db-schema-tool && yarn lint && ",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

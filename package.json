@@ -1,0 +1,38 @@
+{
+    "name": "liferay-db-schema-generator",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "cli.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "db-schema-tool",
+            "diagram-db-react"
+        ]
+    },
+    "scripts": {
+        "cli": "node cli.js",
+        "diagram": "cd diagram-db-react && yarn start",
+        "build": "cd diagram-db-react && yarn build",
+        "lint": "cd db-schema-tool && yarn lint",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "deploy": "cd diagram-db-react && yarn deploy",
+        "serve": "cd diagram-db-react && serve -s build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/garofalog/liferay-db-schema-generator.git"
+    },
+    "author": "Giulio Garofalo",
+    "bugs": {
+        "url": "https://github.com/garofalog/liferay-db-schema-generator/issues"
+    },
+    "homepage": "https://github.com/garofalog/liferay-db-schema-generator#readme",
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "figlet": "^1.5.0",
+        "inquirer": "^7.3.3"
+    }
+}

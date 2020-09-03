@@ -22,8 +22,7 @@ const parser = new xml2js.Parser()
 const PATH_AND_NAMES = []
 const dirServer = process.env.PWD
 
-let fol = ""
-
+let fol
 try {
     let obj = JSON.parse(fs.readFileSync('./project-path.json'))
     fol = obj[0].choices
@@ -70,7 +69,7 @@ const makeJson = async () => {
                 parser.parseString(data, (err, result) => {
                     if (err) throw err
                     jsonResult = JSON.stringify(result)
-                    newFilePath = `${dirServer}/models/${el.filename}.json`
+                    newFilePath = `${dirServer}/db-schema-tool/models/${el.filename}.json`
                     fs.writeFileSync(newFilePath, jsonResult, (err) => {
                         err ? console.log(err) : console.log("Output saved to " + newFilePath)
                     })
@@ -83,10 +82,9 @@ const makeJson = async () => {
 }
 
 const main = async () => {
-        // var dirServerFiles = fs.readdirSync(dirServer);
-        await createPathList()
-        await clearStuff()
-        await makeJson()
+    await createPathList()
+    await clearStuff()
+    await makeJson()
 }
 
 main()

@@ -604,4 +604,4 @@ db-schema.json
 project-path.json
 my-schema-nodes.json
 *.code-snippets
-# build/
+build/

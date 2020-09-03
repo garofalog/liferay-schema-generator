@@ -16,7 +16,7 @@
 // import  fdir from "fdir";
 import fs from "fs"
 const dirServer = process.env.PWD
-const fileObjs = fs.readdirSync(`${dirServer}/models`)
+const fileObjs = fs.readdirSync(`${dirServer}/db-schema-tool/models`)
 const allData = []
 const allIds = []
 const foreignTables = []
@@ -26,7 +26,7 @@ let mygraph = {
 }
 
 fileObjs.forEach((file) => {
-    let correctPath = `${dirServer}/models/${file}`
+    let correctPath = `${dirServer}/db-schema-tool/models/${file}`
     let fileContent = fs.readFileSync(correctPath)
     let readableContent = JSON.stringify(JSON.parse(fileContent))
     let uObject = JSON.parse(readableContent.replace(/-/g, "_").replace(/\$/g, "field"))
@@ -67,7 +67,7 @@ const result = Object.values(foreignTables.reduce((c, v) => {
 }))
 
 fileObjs.forEach((file) => {
-    let correctPath = `${dirServer}/models/${file}`
+    let correctPath = `${dirServer}/db-schema-tool/models/${file}`
     const fileContent = JSON.parse(fs.readFileSync(correctPath))
     const readableContent = JSON.stringify(fileContent)
     const uObject = readableContent.replace(/-/g, "_").replace(/\$/g, "field")
@@ -97,7 +97,7 @@ fileObjs.forEach((file) => {
 })
 
 fileObjs.forEach((file) => {
-    let correctPath = `${dirServer}/models/${file}`
+    let correctPath = `${dirServer}/db-schema-tool/models/${file}`
     let fileContent = JSON.parse(fs.readFileSync(correctPath))
     let readableContent = JSON.stringify(fileContent)
     let uObject = readableContent.replace(/-/g, "_").replace(/\$/g, "field")

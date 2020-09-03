@@ -1,26 +1,27 @@
 This project was created to build an interactive graph displaying Liferay's modules schema.
 
 **We use the following technologies:**
-* For the cli side:
-    * Fìglet
-    * Chalk
-    * Inquirer
+### For the cli side:
+* Fìglet
+* Chalk
+* Inquirer
 <br>
-* For the script side:
+
+### For the script side:
     * fdir
     * fs
     * rimraf
     * xml2js
 <br>
-* For the diagrams side mainly:
-    * React / React-dom [License](https://github.com/facebook/react/blob/master/LICENSE)
-    * three-spritetext [License](https://github.com/vasturiano/three-spritetext/blob/master/LICENSE)
-    * react-force-graph [License](https://github.com/vasturiano/react-force-graph/blob/master/LICENSE)
-    * eslint
-    * babel
-    * webpack
-    * And a lot of other libs, you can find [Here](https://github.com/liferay-commerce/db-schema-viewer/blob/master/diagram-db-react/package.json)
-<br>
+
+### For the diagrams side mainly:
+* React / React-dom ([License](https://github.com/facebook/react/blob/master/LICENSE))
+* three-spritetext ([License](https://github.com/vasturiano/three-spritetext/blob/master/LICENSE))
+* react-force-graph ([License](https://github.com/vasturiano/react-force-graph/blob/master/LICENSE))
+* eslint
+* babel
+* webpack
+* And a lot of other libs, you can find [Here](https://github.com/liferay-commerce/db-schema-viewer/blob/master/diagram-db-react/package.json)
 * and <u>Yarn workspaces</u> to rule them all
 
 
@@ -40,7 +41,7 @@ If all goes well you can run
 
 ### `yarn diagram`
 
-to start the site in devoplent mode ([http://localhost:3000](http://localhost:3000) to view it in the browser). 
+to start the site in devoplent mode [http://localhost:3000](http://localhost:3000) to view it in the browser). 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console
 

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/garofalog/liferay-db-schema-generator/precache-manifest.2384fd012d7d496286ca5743ddb74a46.js"
+  "/garofalog/liferay-db-schema-generator/diagram-db-react/build/precache-manifest.e22f39855b02445bb66283217dabeee9.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -33,7 +33,7 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/garofalog/liferay-db-schema-generator/index.html"), {
+workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/garofalog/liferay-db-schema-generator/diagram-db-react/build/index.html"), {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });

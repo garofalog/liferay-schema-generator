@@ -4,6 +4,7 @@
     "description": "",
     "type": "module",
     "main": "cli.js",
+    "license": "MIT",
     "private": true,
     "workspaces": {
         "packages": [
@@ -25,7 +26,6 @@
         "url": "git+https://github.com/garofalog/liferay-db-schema-generator.git"
     },
     "author": "Giulio Garofalo",
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/garofalog/liferay-db-schema-generator/issues"
     },

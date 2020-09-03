@@ -79,9 +79,7 @@ export default () => {
             <ForceGraph2D
                 width={width}
                 height={height}
-                linkWidth={ link => highlightLinks.has(link) ? 10 : 1 }
                 linkDirectionalParticleWidth={ link => highlightLinks.has(link) ? 4 : 0 }
-                nodeCanvasObjectMode={ node => highlightNodes.has(node) ? 'before' : undefined }
                 onNodeHover={handleNodeHover}
                 onLinkHover={handleLinkHover}
                 graphData={myschema}
@@ -94,8 +92,8 @@ export default () => {
                         const fontSize = 12 / globalScale;
                         ctx.font = `${fontSize}px Sans-Serif`;
                         const textWidth = ctx.measureText(label).width;
-                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
-                        ctx.fillStyle = 'rgba(217, 238, 255, 0.4)';
+                        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
                         ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';

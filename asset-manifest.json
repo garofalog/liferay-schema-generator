@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.7278b481.chunk.css",
-    "main.js": "/static/js/main.1c92fbed.chunk.js",
-    "main.js.map": "/static/js/main.1c92fbed.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/js/2.e540bd74.chunk.js": "/static/js/2.e540bd74.chunk.js",
-    "static/js/2.e540bd74.chunk.js.map": "/static/js/2.e540bd74.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.e04eb1ce76874100eb4fa74c6794ebf8.js": "/precache-manifest.e04eb1ce76874100eb4fa74c6794ebf8.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.7278b481.chunk.css.map": "/static/css/main.7278b481.chunk.css.map"
+    "main.css": "/garofalog/liferay-db-schema-generator/static/css/main.7278b481.chunk.css",
+    "main.js": "/garofalog/liferay-db-schema-generator/static/js/main.0050831a.chunk.js",
+    "main.js.map": "/garofalog/liferay-db-schema-generator/static/js/main.0050831a.chunk.js.map",
+    "runtime~main.js": "/garofalog/liferay-db-schema-generator/static/js/runtime~main.822d6f71.js",
+    "runtime~main.js.map": "/garofalog/liferay-db-schema-generator/static/js/runtime~main.822d6f71.js.map",
+    "static/js/2.e540bd74.chunk.js": "/garofalog/liferay-db-schema-generator/static/js/2.e540bd74.chunk.js",
+    "static/js/2.e540bd74.chunk.js.map": "/garofalog/liferay-db-schema-generator/static/js/2.e540bd74.chunk.js.map",
+    "index.html": "/garofalog/liferay-db-schema-generator/index.html",
+    "precache-manifest.2384fd012d7d496286ca5743ddb74a46.js": "/garofalog/liferay-db-schema-generator/precache-manifest.2384fd012d7d496286ca5743ddb74a46.js",
+    "service-worker.js": "/garofalog/liferay-db-schema-generator/service-worker.js",
+    "static/css/main.7278b481.chunk.css.map": "/garofalog/liferay-db-schema-generator/static/css/main.7278b481.chunk.css.map"
   }
 }
